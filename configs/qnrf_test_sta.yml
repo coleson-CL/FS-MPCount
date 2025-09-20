@@ -1,0 +1,34 @@
+seed: 2024
+version: qnrf
+device: 'cuda:0'
+log_para: 1000
+patch_size: 10000
+mode: 'final'
+#num_epochs: 180
+checkpoint: logs/qnrf/LGLC_DPCBbest.pth
+model:
+  name: 'final'
+  params:
+    pretrained: True
+    mem_size: 1024
+    mem_dim: 256
+    cls_thrs: 0.5
+    err_thrs: 0.5
+    den_dropout: 0.5
+    cls_dropout: 0.3
+    has_err_loss: False
+test_dataset:
+  name: 'den_cls'
+  params: 
+    root: 'data/sta'
+    crop_size: 320
+    downsample: 1
+    is_grey: False
+    unit_size: 16
+    pre_resize: 1
+val_loader: &val_loader_params
+  batch_size: 1
+  num_workers: 4
+  shuffle: False
+  pin_memory: False
+test_loader: *val_loader_params
